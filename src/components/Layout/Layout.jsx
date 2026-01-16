@@ -1,18 +1,36 @@
-import { NavLink, Outlet } from "react-router-dom";
+// src/components/Header/Header.jsx
+import { NavLink } from "react-router-dom";
+import styles from "./Layout.module.css";
 
-export default function Layout() {
+export default function Header() {
   return (
-    <div>
-      <header style={{ padding: 16, borderBottom: "1px solid #ddd" }}>
-        <nav style={{ display: "flex", gap: 12 }}>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/catalog">Catalog</NavLink>
-        </nav>
-      </header>
+    <header className={styles.header}>
+      <div className={styles.container}>
+        <NavLink to="/" className={styles.brand}>
+          TravelTrucks
+        </NavLink>
 
-      <main style={{ padding: 16 }}>
-        <Outlet />
-      </main>
-    </div>
+        <nav className={styles.nav}>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive ? `${styles.link} ${styles.active}` : styles.link
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/catalog"
+            className={({ isActive }) =>
+              isActive ? `${styles.link} ${styles.active}` : styles.link
+            }
+          >
+            Catalog
+          </NavLink>
+        </nav>
+      </div>
+    </header>
   );
 }

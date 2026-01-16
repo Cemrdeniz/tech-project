@@ -1,0 +1,96 @@
+.page {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* HERO full width garanti */
+.hero {
+  width: 100vw;              /* ✅ tüm ekran genişliği */
+  margin-left: calc(50% - 50vw); /* ✅ parent dar olsa bile full taşır */
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  /* header fixed olduğu için üst boşluk */
+  padding-top: 88px;
+  padding-bottom: 56px;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.45) 45%,
+      rgba(0, 0, 0, 0.20) 100%
+    ),
+    var(--hero);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* içerik container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+.content {
+  max-width: 520px;
+}
+
+.title {
+  margin: 0 0 10px;
+  color: #fff;
+  font-weight: 900;
+  line-height: 1.05;
+  font-size: 34px;
+}
+
+.text {
+  margin: 0 0 20px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #e45050;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.button:hover {
+  background: #cf4040;
+  transform: translateY(-1px);
+}
+
+/* tablet */
+@media (min-width: 720px) {
+  .container { padding-inline: 24px; }
+  .hero { padding-top: 110px; padding-bottom: 80px; }
+  .content { max-width: 640px; }
+  .title { font-size: 52px; }
+  .text { font-size: 16px; margin-bottom: 22px; }
+}
+
+/* pc */
+@media (min-width: 1280px) {
+  .container { padding-inline: 32px; }
+  .content { max-width: 720px; }
+  .title { font-size: 60px; }
+  .text { font-size: 18px; }
+}

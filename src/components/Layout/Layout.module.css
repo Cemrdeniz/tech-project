@@ -1,0 +1,104 @@
+/* =========================
+   MOBILE FIRST (0-719px)
+   ========================= */
+
+.header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 1000;
+
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+
+  padding: 14px 16px;
+
+  /* 🔥 GRID ile net hizalama */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+/* SOLDA */
+.brand {
+  justify-self: start;
+  color: #111;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* ORTADA */
+.nav {
+  justify-self: center;
+  display: flex;
+  gap: 18px;
+}
+
+.link {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  padding: 6px 2px;
+}
+
+.link:hover {
+  color: #000;
+}
+
+.active {
+  color: #000;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: #e45050;
+  border-radius: 999px;
+}
+
+/* =========================
+   TABLET (720px - 1279px)
+   ========================= */
+@media (min-width: 720px) {
+  .container {
+    padding-inline: 24px;
+  }
+
+  .nav {
+    gap: 22px;
+  }
+
+  .link {
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   PC (1280px+)
+   ========================= */
+@media (min-width: 1280px) {
+  .container {
+    padding-inline: 32px;
+  }
+
+  .nav {
+    gap: 26px;
+  }
+
+  .link {
+    font-size: 16px;
+  }
+}
