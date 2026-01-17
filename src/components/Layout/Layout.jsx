@@ -7,8 +7,9 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <NavLink to="/" className={styles.brand}>
-          TravelTrucks
-        </NavLink>
+  Travel<span className={styles.title}>Trucks</span>
+</NavLink>
+
 
         <nav className={styles.nav}>
           <NavLink

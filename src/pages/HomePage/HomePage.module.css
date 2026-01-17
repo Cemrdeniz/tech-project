@@ -5,9 +5,8 @@
 
 /* HERO full width garanti */
 .hero {
-  width: 100vw;              /* ✅ tüm ekran genişliği */
   margin-left: calc(50% - 50vw); /* ✅ parent dar olsa bile full taşır */
-  min-height: 100vh;
+  min-height: 80vh;
 
   display: flex;
   align-items: center;
@@ -45,15 +44,15 @@
 .title {
   margin: 0 0 10px;
   color: #fff;
-  font-weight: 900;
+  font-weight: 600;
   line-height: 1.05;
-  font-size: 34px;
+  font-size: 48px;
 }
 
 .text {
   margin: 0 0 20px;
   color: rgba(255, 255, 255, 0.82);
-  font-size: 14px;
+  font-size: 24px;
   line-height: 1.5;
 }
 
@@ -61,14 +60,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  height: 56px;
   padding: 0 22px;
   border-radius: 999px;
   background: #e45050;
   color: #fff;
   text-decoration: none;
-  font-weight: 800;
-  font-size: 14px;
+  font-weight: 500;
+  width: 156px;
+  font-size: 16px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   transition: transform 120ms ease, background 120ms ease;
 }
@@ -77,6 +77,7 @@
   background: #cf4040;
   transform: translateY(-1px);
 }
+
 
 /* tablet */
 @media (min-width: 720px) {
