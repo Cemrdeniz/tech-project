@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCampers, setPage } from "../../features/campers/campersSlice";
-import Filters from "../../components/Filters/Filters";
+import CatalogFilters from "../../components/Filters/Filters";
 import CamperCard from "../../components/CamperCards/CamperCards";
+import styles from "./CatalogPage.module.css";
 
 export default function CatalogPage() {
   const dispatch = useDispatch();
@@ -18,34 +19,41 @@ export default function CatalogPage() {
 
   const canLoadMore = items.length < total;
 
-  const handleLoadMore = () => {
-    dispatch(setPage(page + 1));
-  };
-
   return (
-    <div>
-      <h1>Catalog</h1>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        {/* LEFT: Filters */}
+        <aside className={styles.sidebar}>
+          <CatalogFilters />
+        </aside>
 
-      <Filters />
+        {/* RIGHT: List */}
+        <section className={styles.main}>
+          {status === "failed" && <p className={styles.error}>Error: {error}</p>}
 
-      {status === "loading" && page === 1 && <p>Loading...</p>}
-      {status === "failed" && <p>Error: {error}</p>}
+          <ul className={styles.list}>
+            {items.map((camper) => (
+              <CamperCard key={camper.id} camper={camper} />
+            ))}
+          </ul>
 
-      <ul style={{ padding: 0, listStyle: "none" }}>
-        {items.map((camper) => (
-          <CamperCard key={camper.id} camper={camper} />
-        ))}
-      </ul>
+          <div className={styles.footer}>
+            {status === "loading" && page === 1 && (
+              <p className={styles.loading}>Loading...</p>
+            )}
 
-      {canLoadMore && (
-        <button onClick={handleLoadMore} disabled={status === "loading"} style={{ cursor: "pointer" }}>
-          {status === "loading" ? "Loading..." : "Load More"}
-        </button>
-      )}
-
-      {!canLoadMore && status === "succeeded" && items.length > 0 && (
-        <p>All items loaded.</p>
-      )}
+            {canLoadMore && (
+              <button
+                className={styles.loadMore}
+                onClick={() => dispatch(setPage(page + 1))}
+                disabled={status === "loading"}
+              >
+                {status === "loading" ? "Loading..." : "Load more"}
+              </button>
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

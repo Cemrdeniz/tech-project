@@ -1,37 +1,15 @@
-// src/components/Header/Header.jsx
-import { NavLink } from "react-router-dom";
+// src/components/Layout/Layout.jsx
+import { Outlet } from "react-router-dom";
+import Header from "../Header/Header";
 import styles from "./Layout.module.css";
 
-export default function Header() {
+export default function Layout() {
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <NavLink to="/" className={styles.brand}>
-  Travel<span className={styles.title}>Trucks</span>
-</NavLink>
-
-
-        <nav className={styles.nav}>
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
-          >
-            Home
-          </NavLink>
-
-          <NavLink
-            to="/catalog"
-            className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.active}` : styles.link
-            }
-          >
-            Catalog
-          </NavLink>
-        </nav>
-      </div>
-    </header>
+    <div className={styles.app}>
+      <Header />
+      <main className={styles.main}>
+        <Outlet />
+      </main>
+    </div>
   );
 }

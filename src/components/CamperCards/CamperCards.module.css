@@ -1,0 +1,236 @@
+/* =========================
+   MOBILE FIRST (0-719px)
+   ========================= */
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr; /* ✅ mobil: resim üstte, içerik altta */
+  gap: 14px;
+
+  border: 1px solid #eee;
+  border-radius: 18px;
+  padding: 14px;
+  background: #fff;
+
+  min-width: 0;
+  overflow: hidden; /* taşma olmasın */
+}
+
+.imgWrap {
+  width: 100%; /* ✅ mobil: full width */
+  height: 200px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imgFallback {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #6b7280;
+}
+
+.content {
+  min-width: 0;
+}
+
+/* üst satır: başlık + fiyat/fav */
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+.badge {
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #111827;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badgeIcon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.heartIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px; /* mobil küçük */
+  font-weight: 500;
+ color: black;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.priceFav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.price {
+  font-weight: 500;
+  white-space: nowrap;
+  color: black;
+}
+
+.favBtn {
+  background: #fff;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heartIcon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.15s ease;
+}
+
+.favBtn:hover .heartIcon {
+  transform: scale(1.1);
+}
+
+
+/* rating + location mobilde alt alta da düşebilir */
+.subRow {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap; /* ✅ sığmazsa alt satıra */
+  gap: 10px;
+  align-items: center;
+  color: #374151;
+  font-size: 13px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.star {
+  color: #f59e0b;
+}
+
+.reviews {
+  text-decoration: underline;
+  color: #111827;
+}
+
+.location {
+  opacity: 0.85;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.desc {
+  margin: 10px 0 12px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.4;
+
+  /* ✅ mobilde 3 satır */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.badge {
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #111827;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  width: fit-content;
+}
+
+/* çok küçük ekranlarda buton full */
+@media (max-width: 360px) {
+  .more {
+    width: 100%;
+  }
+}
+
+/* =========================
+   TABLET (720px - 1279px)
+   ========================= */
+@media (min-width: 720px) {
+  .card {
+    /* ✅ tablet: resim solda, içerik sağda */
+    grid-template-columns: clamp(220px, 28vw, 280px) minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .imgWrap {
+    width: 100%;
+    height: 190px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .desc {
+    -webkit-line-clamp: 2;
+  }
+}
+
+/* =========================
+   PC (1280px+)
+   ========================= */
+@media (min-width: 1280px) {
+  .card {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .imgWrap {
+    height: 190px;
+  }
+}

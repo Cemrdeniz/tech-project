@@ -1,112 +1,154 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "../../features/filters/filtersSlice";
-import { resetList, setPage, fetchCampers } from "../../features/campers/campersSlice";
+import { resetList, setPage } from "../../features/campers/campersSlice";
+import styles from "./Filters.module.css";
+
+/* ===== ICONS ===== */
+import VanIcon from "../../assets/Van.png";
+import FullyIcon from "../../assets/fully.png";
+import AlcoveIcon from "../../assets/alcove.png";
+
+import AcIcon from "../../assets/ac.png";
+import KitchenIcon from "../../assets/kitchen.png";
+import TvIcon from "../../assets/tv.png";
+import BathIcon from "../../assets/bathroom.png";
+import AutoIcon from "../../assets/automatic.png";
+
+/* ===== KEYS ===== */
+const EQUIPMENT_KEYS = ["AC", "kitchen", "TV", "bathroom", "automatic"];
+const TYPE_KEYS = ["Van", "fullyIntegrated", "alcove"];
+
+/* ===== ICON MAPS ===== */
+const EQUIPMENT_ICONS = {
+  AC: AcIcon,
+  kitchen: KitchenIcon,
+  TV: TvIcon,
+  bathroom: BathIcon,
+  automatic: AutoIcon,
+};
+
+const TYPE_ICONS = {
+  Van: VanIcon,
+  fullyIntegrated: FullyIcon,
+  alcove: AlcoveIcon,
+};
 
 export default function Filters() {
   const dispatch = useDispatch();
-  const currentFilters = useSelector((state) => state.filters);
-  const limit = useSelector((state) => state.campers.limit);
+  const current = useSelector((state) => state.filters);
 
-  // Local state: kullanıcı yazarken hemen fetch atmayacağız
-  const [location, setLocation] = useState(currentFilters.location);
-  const [form, setForm] = useState(currentFilters.form);
-  const [features, setFeatures] = useState({ ...currentFilters.features });
+  const [location, setLocation] = useState(current.location || "");
+  const [equipment, setEquipment] = useState(() => ({
+    AC: !!current.features?.AC,
+    kitchen: !!current.features?.kitchen,
+    TV: !!current.features?.TV,
+    bathroom: !!current.features?.bathroom,
+    automatic: !!current.features?.automatic,
+  }));
+  const [type, setType] = useState(current.form || "");
 
-  const toggleFeatureLocal = (key) => {
-    setFeatures((prev) => ({ ...prev, [key]: !prev[key] }));
+  const featurePayload = useMemo(() => {
+    return {
+      AC: !!equipment.AC,
+      kitchen: !!equipment.kitchen,
+      TV: !!equipment.TV,
+      bathroom: !!equipment.bathroom,
+      automatic: !!equipment.automatic,
+      radio: !!current.features?.radio,
+      refrigerator: !!current.features?.refrigerator,
+      microwave: !!current.features?.microwave,
+      gas: !!current.features?.gas,
+      water: !!current.features?.water,
+    };
+  }, [equipment, current.features]);
+
+  const toggleEquip = (key) => {
+    setEquipment((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleApply = () => {
-    const nextFilters = { location, form, features };
-
-    // 1) global filtreleri güncelle
-    dispatch(setFilters(nextFilters));
-
-    // 2) eski sonuçları temizle (KRİTİK)
-    dispatch(resetList());
-
-    // 3) sayfayı 1'e çek
-    dispatch(setPage(1));
-
-    // 4) backend'e yeni filtrelerle fetch
-    dispatch(fetchCampers({ page: 1, limit, filters: nextFilters }));
-  };
-
-  const handleClear = () => {
-    const cleared = {
-      location: "",
-      form: "",
-      features: {
-        AC: false,
-        kitchen: false,
-        bathroom: false,
-        TV: false,
-        radio: false,
-        refrigerator: false,
-        microwave: false,
-        gas: false,
-        water: false,
-      },
-    };
-
-    setLocation("");
-    setForm("");
-    setFeatures(cleared.features);
-
-    dispatch(setFilters(cleared));
+    dispatch(
+      setFilters({
+        location,
+        form: type,
+        features: featurePayload,
+      })
+    );
     dispatch(resetList());
     dispatch(setPage(1));
-    dispatch(fetchCampers({ page: 1, limit, filters: cleared }));
   };
 
   return (
-    <div style={{ padding: 12, border: "1px solid #ddd", marginBottom: 16 }}>
-      <h3>Filters (Backend)</h3>
-
-      <div style={{ marginBottom: 8 }}>
-        <label>
-          Location:&nbsp;
+    <div className={styles.box}>
+      {/* LOCATION */}
+      <div className={styles.block}>
+        <p className={styles.label}>Location</p>
+        <div className={styles.inputWrap}>
+          <span className={styles.pin}>📍</span>
           <input
+            className={styles.input}
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Kyiv"
+            placeholder="Kyiv, Ukraine"
           />
-        </label>
+        </div>
       </div>
 
-      <div style={{ marginBottom: 8 }}>
-        <label>
-          Vehicle Type (form):&nbsp;
-          <select value={form} onChange={(e) => setForm(e.target.value)}>
-            <option value="">All</option>
-            <option value="panelTruck">panelTruck</option>
-            <option value="fullyIntegrated">fullyIntegrated</option>
-            <option value="alcove">alcove</option>
-          </select>
-        </label>
-      </div>
+      {/* FILTERS */}
+      <div className={styles.block}>
+        <p className={styles.label}>Filters</p>
 
-      <div style={{ marginBottom: 8 }}>
-        <div>Features:</div>
-        {Object.keys(features).map((key) => (
-          <label key={key} style={{ marginRight: 12 }}>
-            <input
-              type="checkbox"
-              checked={features[key]}
-              onChange={() => toggleFeatureLocal(key)}
-            />
-            &nbsp;{key}
-          </label>
-        ))}
-      </div>
+        {/* EQUIPMENT */}
+        <h4 className={styles.h4}>Vehicle equipment</h4>
+        <div className={`${styles.grid} ${styles.gridWithDivider}`}>
+          {EQUIPMENT_KEYS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              onClick={() => toggleEquip(k)}
+              className={`${styles.tile} ${equipment[k] ? styles.active : ""}`}
+            >
+              <span className={styles.tileIcon}>
+                <img
+                  src={EQUIPMENT_ICONS[k]}
+                  alt=""
+                  className={styles.iconImg}
+                />
+              </span>
+              <span className={styles.tileText}>{k}</span>
+            </button>
+          ))}
+        </div>
 
-      <button onClick={handleApply} style={{ marginRight: 8, cursor: "pointer" }}>
-        Apply
-      </button>
-      <button onClick={handleClear} style={{ cursor: "pointer" }}>
-        Clear
-      </button>
+        {/* TYPE */}
+        <h4 className={styles.h4}>Vehicle type</h4>
+        <div className={styles.grid}>
+          {TYPE_KEYS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              onClick={() => setType(k)}
+              className={`${styles.tile} ${type === k ? styles.active : ""}`}
+            >
+              <span className={styles.tileIcon}>
+                <img
+                  src={TYPE_ICONS[k]}
+                  alt=""
+                  className={styles.iconImg}
+                />
+              </span>
+              <span className={styles.tileText}>
+                {k === "fullyIntegrated" ? "Fully Integrated" : k}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <button className={styles.searchBtn} onClick={handleApply}>
+          Search
+        </button>
+      </div>
     </div>
   );
 }
