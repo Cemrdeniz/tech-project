@@ -12,13 +12,19 @@ export const fetchCampers = createAsyncThunk(
     try {
       const params = { page, limit };
 
-      // Backend filtering (query params)
+      // ✅ Location server-side çalışıyorsa bırak
       if (filters?.location) params.location = filters.location;
-      if (filters?.form) params.form = filters.form;
 
+      // ❌ form (van/fullyIntegrated/alcove) MockAPI'de query ile sorun çıkarabiliyor
+      // if (filters?.form) params.form = filters.form;
+
+      // ✅ Features: automatic'i query'ye YOLLAMA (404 fix)
       if (filters?.features) {
         Object.entries(filters.features).forEach(([key, value]) => {
-          if (value === true) params[key] = true;
+          if (value === true) {
+            if (key === "automatic") return; // ✅ automatic query yok
+            params[key] = true;
+          }
         });
       }
 
@@ -68,7 +74,7 @@ const campersSlice = createSlice({
   initialState,
   reducers: {
     resetList(state) {
-      // Filtre değişince bunu çağıracağız
+      // Filtre değişince çağır
       state.items = [];
       state.total = 0;
       state.page = 1;
@@ -97,9 +103,11 @@ const campersSlice = createSlice({
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.status = "succeeded";
 
-        const { items, total } = action.payload || { items: [], total: 0 };
+        const payload = action.payload || {};
+        const items = payload.items || [];
+        const total = payload.total || 0;
 
-        // state.page değerine göre replace/append
+        // page 1 ise replace, değilse append
         if (state.page === 1) {
           state.items = items;
         } else {

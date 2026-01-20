@@ -15,30 +15,30 @@ import TvIcon from "../../assets/tv.png";
 import BathIcon from "../../assets/bathroom.png";
 import AutoIcon from "../../assets/automatic.png";
 
-/* ===== KEYS ===== */
-const EQUIPMENT_KEYS = ["AC", "kitchen", "TV", "bathroom", "automatic"];
-const TYPE_KEYS = ["Van", "fullyIntegrated", "alcove"];
+/* ===== OPTIONS ===== */
 
-/* ===== ICON MAPS ===== */
-const EQUIPMENT_ICONS = {
-  AC: AcIcon,
-  kitchen: KitchenIcon,
-  TV: TvIcon,
-  bathroom: BathIcon,
-  automatic: AutoIcon,
-};
+// backend keys ile birebir
+const EQUIPMENT_OPTIONS = [
+  { key: "AC", label: "AC", icon: AcIcon },
+  { key: "kitchen", label: "Kitchen", icon: KitchenIcon },
+  { key: "TV", label: "TV", icon: TvIcon },
+  { key: "bathroom", label: "Bathroom", icon: BathIcon },
+  { key: "automatic", label: "Automatic", icon: AutoIcon },
+];
 
-const TYPE_ICONS = {
-  Van: VanIcon,
-  fullyIntegrated: FullyIcon,
-  alcove: AlcoveIcon,
-};
+const TYPE_OPTIONS = [
+  { key: "van", label: "Van", icon: VanIcon },
+  { key: "fullyIntegrated", label: "Fully Integrated", icon: FullyIcon },
+  { key: "alcove", label: "Alcove", icon: AlcoveIcon },
+];
 
 export default function Filters() {
   const dispatch = useDispatch();
   const current = useSelector((state) => state.filters);
 
+  /* ===== STATE ===== */
   const [location, setLocation] = useState(current.location || "");
+
   const [equipment, setEquipment] = useState(() => ({
     AC: !!current.features?.AC,
     kitchen: !!current.features?.kitchen,
@@ -46,8 +46,10 @@ export default function Filters() {
     bathroom: !!current.features?.bathroom,
     automatic: !!current.features?.automatic,
   }));
+
   const [type, setType] = useState(current.form || "");
 
+  /* ===== PAYLOAD ===== */
   const featurePayload = useMemo(() => {
     return {
       AC: !!equipment.AC,
@@ -63,18 +65,21 @@ export default function Filters() {
     };
   }, [equipment, current.features]);
 
+  /* ===== ACTIONS ===== */
   const toggleEquip = (key) => {
     setEquipment((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleApply = () => {
-    dispatch(
-      setFilters({
-        location,
-        form: type,
-        features: featurePayload,
-      })
-    );
+    const payload = {
+      location,
+      form: type, // ✅ "van" | "alcove" | "fullyIntegrated"
+      features: featurePayload,
+    };
+
+    console.log("FILTER PAYLOAD:", payload);
+
+    dispatch(setFilters(payload));
     dispatch(resetList());
     dispatch(setPage(1));
   };
@@ -102,21 +107,19 @@ export default function Filters() {
         {/* EQUIPMENT */}
         <h4 className={styles.h4}>Vehicle equipment</h4>
         <div className={`${styles.grid} ${styles.gridWithDivider}`}>
-          {EQUIPMENT_KEYS.map((k) => (
+          {EQUIPMENT_OPTIONS.map(({ key, label, icon }) => (
             <button
-              key={k}
+              key={key}
               type="button"
-              onClick={() => toggleEquip(k)}
-              className={`${styles.tile} ${equipment[k] ? styles.active : ""}`}
+              onClick={() => toggleEquip(key)}
+              className={`${styles.tile} ${
+                equipment[key] ? styles.active : ""
+              }`}
             >
               <span className={styles.tileIcon}>
-                <img
-                  src={EQUIPMENT_ICONS[k]}
-                  alt=""
-                  className={styles.iconImg}
-                />
+                <img src={icon} alt="" className={styles.iconImg} />
               </span>
-              <span className={styles.tileText}>{k}</span>
+              <span className={styles.tileText}>{label}</span>
             </button>
           ))}
         </div>
@@ -124,23 +127,19 @@ export default function Filters() {
         {/* TYPE */}
         <h4 className={styles.h4}>Vehicle type</h4>
         <div className={styles.grid}>
-          {TYPE_KEYS.map((k) => (
+          {TYPE_OPTIONS.map(({ key, label, icon }) => (
             <button
-              key={k}
+              key={key}
               type="button"
-              onClick={() => setType(k)}
-              className={`${styles.tile} ${type === k ? styles.active : ""}`}
+              onClick={() => setType(key)}
+              className={`${styles.tile} ${
+                type === key ? styles.active : ""
+              }`}
             >
               <span className={styles.tileIcon}>
-                <img
-                  src={TYPE_ICONS[k]}
-                  alt=""
-                  className={styles.iconImg}
-                />
+                <img src={icon} alt="" className={styles.iconImg} />
               </span>
-              <span className={styles.tileText}>
-                {k === "fullyIntegrated" ? "Fully Integrated" : k}
-              </span>
+              <span className={styles.tileText}>{label}</span>
             </button>
           ))}
         </div>

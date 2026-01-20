@@ -97,7 +97,7 @@
 
 .favBtn {
   background: #fff;
-  border-radius: 999px;
+  border:none;
   width: 34px;
   height: 34px;
   cursor: pointer;
@@ -110,6 +110,7 @@
 .heartIcon {
   width: 18px;
   height: 18px;
+   border:none;
   transition: transform 0.15s ease;
 }
 

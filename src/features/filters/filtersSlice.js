@@ -13,6 +13,9 @@ const initialState = {
     microwave: false,
     gas: false,
     water: false,
+
+    // ✅ bunu ekle
+    automatic: false,
   },
 };
 
@@ -33,7 +36,6 @@ const filtersSlice = createSlice({
       }
     },
     setFilters(state, action) {
-      // komple setlemek istersen (Apply butonunda kullanışlı)
       const next = action.payload;
       state.location = next.location ?? "";
       state.form = next.form ?? "";

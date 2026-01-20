@@ -24,6 +24,7 @@
   position: relative;
   width: 100%;
   min-width: 0;
+  color: black;
 }
 
 .pin {
@@ -43,6 +44,7 @@
   border-radius: 12px;
   background: #f5f6f7;
   outline: none;
+  color: black;
 }
 
 .h4 {
