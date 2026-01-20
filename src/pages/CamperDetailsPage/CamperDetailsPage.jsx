@@ -18,21 +18,22 @@ export default function CamperDetailsPage() {
   const { selected, selectedStatus, selectedError } = useSelector(
     (state) => state.campers
   );
+
   const favoriteIds = useSelector((state) => state.favorites.ids);
-  const isFav = favoriteIds.includes(String(id));
+  const idStr = String(id);
+  const isFav = favoriteIds.includes(idStr);
 
   const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchCamperById(id));
-  }, [dispatch, id]);
+    if (!id) return;
+    dispatch(fetchCamperById(idStr));
+  }, [dispatch, idStr, id]);
 
-  // Detay değişince aktif görseli sıfırla
   useEffect(() => {
     setActiveImg(0);
   }, [selected?.id]);
 
-  // ✅ Gallery / images / photos gibi olası alanları destekle + object[]/string[] farkını çöz
   const images = useMemo(() => {
     const raw =
       selected?.gallery ??
@@ -45,10 +46,8 @@ export default function CamperDetailsPage() {
 
     if (!Array.isArray(raw)) return [];
 
-    // string[] ise direkt döndür
     if (raw.every((x) => typeof x === "string")) return raw;
 
-    // object[] ise içinden url çek
     return raw
       .map((x) => {
         if (!x) return null;
@@ -68,7 +67,7 @@ export default function CamperDetailsPage() {
   }, [selected]);
 
   const handleToggleFav = () => {
-    dispatch(toggleFavorite(id));
+    dispatch(toggleFavorite(idStr));
   };
 
   const handleBookingSubmit = (e) => {
@@ -96,26 +95,36 @@ export default function CamperDetailsPage() {
 
   const activeSrc = images[activeImg];
 
+  const priceNum = Number(selected.price);
+  const priceText = Number.isFinite(priceNum) ? priceNum.toFixed(2) : "—";
+
   return (
     <div style={{ padding: 12 }}>
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
         <div>
           <h1 style={{ margin: 0 }}>{selected.name}</h1>
+
           <p style={{ margin: "6px 0" }}>
             <Stars value={selected.rating} />{" "}
             <span style={{ marginLeft: 8 }}>
               ({selected.reviews?.length || 0} reviews)
             </span>
           </p>
+
           <p style={{ margin: "6px 0" }}>Location: {selected.location}</p>
         </div>
 
         <div style={{ textAlign: "right" }}>
           <p style={{ margin: 0, fontWeight: 700, fontSize: 18 }}>
-            {Number(selected.price).toFixed(2)}
+            €{priceText}
           </p>
-          <button onClick={handleToggleFav} style={{ cursor: "pointer" }}>
+
+          <button
+            onClick={handleToggleFav}
+            style={{ cursor: "pointer" }}
+            type="button"
+          >
             {isFav ? "★ Favorited" : "☆ Add Favorite"}
           </button>
         </div>
@@ -161,6 +170,7 @@ export default function CamperDetailsPage() {
                     background: "transparent",
                   }}
                   aria-label={`Open image ${idx + 1}`}
+                  type="button"
                 >
                   <img
                     src={src}
@@ -185,7 +195,7 @@ export default function CamperDetailsPage() {
 
       <hr style={{ margin: "16px 0" }} />
 
-      {/* Features & Details (basit) */}
+      {/* Features & Details */}
       <section>
         <h2>Features</h2>
         <ul>
@@ -218,6 +228,7 @@ export default function CamperDetailsPage() {
       {/* Reviews */}
       <section>
         <h2>Reviews</h2>
+
         {Array.isArray(selected.reviews) && selected.reviews.length > 0 ? (
           <ul style={{ padding: 0, listStyle: "none" }}>
             {selected.reviews.map((rev, idx) => (
@@ -250,6 +261,7 @@ export default function CamperDetailsPage() {
       {/* Booking Form */}
       <section>
         <h2>Book your camper</h2>
+
         <form onSubmit={handleBookingSubmit} style={{ maxWidth: 420 }}>
           <div style={{ marginBottom: 10 }}>
             <label>
