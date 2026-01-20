@@ -5,7 +5,7 @@ import { resetList, setPage } from "../../features/campers/campersSlice";
 import styles from "./Filters.module.css";
 
 /* ===== ICONS ===== */
-import VanIcon from "../../assets/Van.png";
+import VanIcon from "../../assets/van.png";
 import FullyIcon from "../../assets/fully.png";
 import AlcoveIcon from "../../assets/alcove.png";
 
