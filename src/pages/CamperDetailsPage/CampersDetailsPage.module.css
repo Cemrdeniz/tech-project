@@ -1,0 +1,434 @@
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #101828;
+  --muted: #667085;
+  --line: #eaecf0;
+  --accent: #e44848;
+  --star: #f4b400;
+}
+
+.page {
+  padding: var(--header-offset, 88px) 16px 40px;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* TOP */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.metaRow {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.starLine {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviewsCount {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.priceInline {
+  margin: 10px 0 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.hr {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 18px 0;
+}
+
+/* STARS */
+.stars {
+  color: var(--star);
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.starsSmall {
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   GALLERY (720–1280 FIX)
+   ========================= */
+
+.gallerySection {
+  margin-bottom: 12px;
+}
+
+.galleryGrid3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.galleryItem {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #eef2f6;
+  border: 1px solid var(--line);
+}
+
+/* ✅ oran sabit, height sabit değil */
+.galleryImg,
+.galleryPlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.galleryImg {
+  height: 100%;
+  object-fit: cover;
+}
+
+.galleryPlaceholder {
+  background: #eef2f6;
+}
+
+/* ✅ 720–1279: 2 kolon */
+@media (min-width: 720px) {
+  .galleryGrid3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ✅ 1280+: 3 kolon */
+@media (min-width: 1280px) {
+  .galleryGrid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.galleryDesc {
+  margin: 14px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #475467;
+  max-width: 1120px;
+  font-weight: 400;
+}
+
+/* TABS */
+.tabs {
+  margin-top: 18px;
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabBtn {
+  position: relative;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 12px 0;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.tabBtnActive {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tabBtnActive::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* LAYOUT */
+.contentGrid,
+.contentGridReviews {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+/* CARD */
+.card {
+  border-radius: 16px;
+  background: rgba(247, 247, 247, 1);
+  padding: 34px;
+}
+
+.cardTitle {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* BADGES */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(242, 244, 247, 1);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.badgeIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.badgeText {
+  line-height: 1;
+}
+
+/* VEHICLE DETAILS */
+.vehicleDivider {
+  height: 1px;
+  background: var(--line);
+  margin: 10px 0 2px;
+}
+
+.detailsTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-top: 8px;
+}
+
+.detailsRow {
+  border: 0;
+}
+
+.detailsCellKey {
+  width: 45%;
+  padding: 12px 0;
+  color: #667085;
+  font-size: 14px;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+.detailsCellVal {
+  width: 55%;
+  padding: 12px 0;
+  text-align: right;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* REVIEWS */
+.reviewsWrap {
+  padding-top: 6px;
+}
+
+.reviewListModern {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reviewRow {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.reviewRow:last-child {
+  border-bottom: 0;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f4f7;
+  color: var(--accent);
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+
+.reviewBody {
+  min-width: 0;
+}
+
+.reviewHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.reviewName {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.reviewComment {
+  margin: 0;
+  color: #475467;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* BOOKING */
+.bookingCard {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  height: 85%;
+  background: var(--card);
+  padding: 36px;
+  overflow: hidden;
+}
+
+.bookingTitle {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.bookingSub {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.inputSoft {
+  width: 90%;
+  height: 46px;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  background: #f2f4f7;
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.textareaSoft {
+  width: 90%;
+  min-height: 112px;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  background: #f2f4f7;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text);
+  resize: vertical;
+}
+
+.sendBtnBig {
+  margin: 20px auto 0;
+  display: block;
+  width: 160px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sendBtnBig:hover {
+  filter: brightness(0.95);
+}
+
+/* BREAKPOINTS (layout) */
+@media (min-width: 768px) {
+  .page {
+    padding-inline: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+   .contentGrid,
+  .contentGridReviews {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* ✅ %50 / %50 */
+    gap: 24px;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1158px) {
+  .page {
+    padding-inline: 32px;
+  }
+}

@@ -1,16 +1,29 @@
-# React + Vite
+# TravelTrucks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend web application for camper rental listings. Includes catalog with backend filtering, favorites persistence, camper details with gallery/reviews, and a booking form.
 
-Currently, two official plugins are available:
+## Features
+- Home page with CTA (View Now → Catalog)
+- Catalog page
+  - Backend filtering (location, vehicle type, extra features)
+  - Favorites (persisted with localStorage)
+  - Load More pagination
+  - Show More opens details in a new tab
+- Camper details page
+  - Gallery
+  - Features & details
+  - Reviews with 5-star rating
+  - Booking form with success notification
+- Loading indicator for async requests
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- Vite + React
+- React Router
+- Redux Toolkit + react-redux
+- Axios
+- CSS Modules (planned / in progress)
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+1. Install dependencies:
+   ```bash
+   npm install
