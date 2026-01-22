@@ -21,7 +21,3 @@ Frontend web application for camper rental listings. Includes catalog with backe
 - Axios
 - CSS Modules (planned / in progress)
 
-## Getting Started
-1. Install dependencies:
-   ```bash
-   npm install
