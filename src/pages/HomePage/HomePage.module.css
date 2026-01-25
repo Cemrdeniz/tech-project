@@ -3,15 +3,15 @@
   width: 100%;
 }
 
-/* HERO full width garanti */
+
 .hero {
-  margin-left: calc(50% - 50vw); /* ✅ parent dar olsa bile full taşır */
+  margin-left: calc(50% - 50vw); 
   min-height: 80vh;
 
   display: flex;
   align-items: center;
 
-  /* header fixed olduğu için üst boşluk */
+ 
   padding-top: 88px;
   padding-bottom: 56px;
 
